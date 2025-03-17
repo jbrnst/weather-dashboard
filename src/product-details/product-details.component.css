@@ -1,0 +1,44 @@
+.product-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:disabled {
+  background-color: #6b9b6b;
+  cursor: default;
+  opacity: 0.8;
+}
+
+.btn-primary {
+  background-color: #6b9b6b;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #5a855a;
+}
+
+.btn-secondary {
+  background-color: #607d8b;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #546e7a;
+}

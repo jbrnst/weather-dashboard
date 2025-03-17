@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  align-items: flex-start; /* Aligns both sections to the top */
+  justify-content: center; /* Centers the whole container on the page */
+}
+
+.photo-display {
+  display: flex;
+  align-items: flex-start; /* Ensures the image aligns at the top */
+  height: 455px;
+  max-height: 455px;
+  padding: 10px;
+}
+
+.large-photo {
+  width: 100%;
+  max-width: 448px;
+  border: 0px solid rgb(17, 1, 1);
+  padding: 1px;
+  height: auto; /* Maintain aspect ratio */
+}
+
+.photo-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 5px; /* Corrected padding */
+  max-width: 150px;
+  height: 445px; /* Matches the height of the photo display */
+  max-height: 455px;
+  overflow-y: auto;
+  overflow-x:hidden;
+  padding-right:12px;
+  margin-top:5px;
+}
+
+.thumbnail img {
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.thumbnail img:hover {
+  border-color: #007bff;
+}

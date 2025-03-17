@@ -1,0 +1,10 @@
+<div class="services-container">
+  <h2>Salon Services</h2>
+  <ul>
+    <li *ngFor="let service of services" (click)="viewStylists(service.title)">
+      <h3>{{ service.title }}</h3>
+      <p>{{ service.description }}</p>
+      <button class="view-stylists-btn">View Available Stylists</button>
+    </li>
+  </ul>
+</div>

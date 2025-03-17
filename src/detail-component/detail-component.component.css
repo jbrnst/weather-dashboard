@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: row; /* Arrange children in a row */
+  align-items: flex-start; /* Align items at the top */
+  justify-content: center; /* Space items evenly */
+  max-width: 1600px; /*Set the maximum width of the container */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px; /* Add padding inside the container */
+}
+
+.header {
+  flex: 1; /* Take up remaining space */
+  padding: 30px; /* Add space between header and image */
+  /* max-width:1000px; */
+  line-height: 1.5;
+  border-width: 0px;
+  border-style: solid;
+}
+
+
+.photo-2 {
+  display:flex;
+  justify-content: center;
+  flex: 1; /* Take up remaining space */
+  /* padding-left:250px; */
+  padding:1px;
+  border-style: solid;
+  border-width: 0px;
+  /* padding:30px; */
+  margin-top:50px;
+}
+
+.photo-2 img {
+  max-width: 100%; /* Ensure image doesn't exceed container width */
+  height: auto; /* Maintain aspect ratio */
+  border-width: 1px;
+  border-style: solid;
+  padding:1px;
+}
+
+.content {
+  width: 100%; /* Take up full width */
+  margin-top: 20px; /* Add space above content */
+}
+
+/* Font styling */
+.header h2 {
+  font-size: 36px; /* Adjust the font size of the h2 element */
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.header p {
+  font-size: 20px; /* Adjust the font size of the p elements */
+  font-family: "Open Sans", Arial, sans-serif;
+}

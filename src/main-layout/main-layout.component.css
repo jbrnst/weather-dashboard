@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.menu {
+  width: 100%;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  padding: 10px; /* Optional: Add padding if needed */
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.detail {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+}

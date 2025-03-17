@@ -1,0 +1,76 @@
+/* percentage-interest.component.css */
+
+.form-container {
+  background-color: #f7f7f7;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.unit-type-container {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: calc(100% - 20px); /* Adjusted to accommodate padding */
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.result-container {
+  background-color: #eaf7ff;
+  padding: 10px;
+  border: 1px solid #3498db;
+  border-radius: 5px;
+}
+
+/* percentage-interest.component.css */
+
+.error-container {
+  background-color: #ffe5e5; /* Light red background color for errors */
+  padding: 10px;
+  border: 1px solid #ff6666; /* Darker red border for errors */
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.error-message {
+  color: #ff0000; /* Red text color for errors */
+  margin: 0;
+}
+
+.panel-container {
+  display: flex;
+}
+
+.left-panel {
+  flex: 1;
+  margin-right: 20px; /* Adjust as needed */
+  height: 800px; /* Set a specific height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.right-panel {
+  width: 300px; /* Adjust as needed */
+}
+
+.form-container {
+  margin-bottom: 15px;
+}
+
+.error-container, .result-container {
+  margin-top: 20px;
+}
+
+/* Add any additional styling based on your design */
+

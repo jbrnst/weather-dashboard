@@ -1,0 +1,17 @@
+<div class="container">
+<!-- Left section for the selected photo -->
+<div class="photo-display">
+  <img *ngIf="selectedPhoto" [src]="selectedPhoto.url" [alt]="selectedPhoto.alt" class="large-photo" />
+</div>
+
+<!-- Right section for the photo menu -->
+<div class="photo-menu">
+  <div
+    *ngFor="let photo of photos"
+    class="thumbnail"
+    (click)="selectPhoto(photo)"
+  >
+    <img [src]="photo.url" [alt]="photo.alt" />
+  </div>
+</div>
+</div>

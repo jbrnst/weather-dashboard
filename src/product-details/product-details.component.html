@@ -1,0 +1,13 @@
+<div *ngIf="product" class="product-container">
+  <h2>{{ product.name }}</h2>
+  <p>Price: {{ product.price | currency }}</p>
+  <p>Description: {{ product.description }}</p>
+
+  <div class="button-group">
+    <button class="btn btn-primary" (click)="addToCart()" [disabled]="addedToCart">
+      <span *ngIf="!addedToCart">🛒 Add to Cart</span>
+      <span *ngIf="addedToCart">✓ Added to Cart</span>
+    </button>
+    <button class="btn btn-secondary" (click)="goBack()">🔙 Back to Products</button>
+  </div>
+</div>

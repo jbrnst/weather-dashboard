@@ -1,0 +1,239 @@
+<div class="weather-container">
+  <div class="weather-panel">
+    <!-- Cities count and empty state -->
+    <div class="cities-info">
+      <p *ngIf="weatherData.length > 0" class="cities-count">
+        Showing weather for {{ weatherData.length }} {{ weatherData.length === 1 ? 'city' : 'cities' }}
+      </p>
+      <p *ngIf="weatherData.length === 0 && !loading && !error" class="empty-state">
+        Search for a city to display the weather data
+      </p>
+    </div>
+
+    <!-- Search Location -->
+    <div class="search-section">
+      <div class="search-container">
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery"
+          (input)="onSearchInput($event)"
+          placeholder="Search for a city..." 
+          class="search-input"
+        >
+        <div *ngIf="searchResults.length > 0" class="search-results">
+          <div 
+            *ngFor="let result of searchResults" 
+            class="search-result-item"
+            (click)="addLocationFromSearch(result)"
+          >
+            {{ result.name }}{{ result.admin1 ? ', ' + result.admin1 : '' }}, {{ result.country }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen Size Warning -->
+    <div *ngIf="screenSizeWarning" class="screen-size-warning">
+      {{ screenSizeWarning }}
+    </div>
+
+    <!-- Custom Options Section -->
+    <div class="controls-section">
+      <div class="controls-header" (click)="toggleControls()">
+        <h2>Custom Options</h2>
+        <span class="toggle-icon">{{ isControlsExpanded ? '▼' : '▶' }}</span>
+      </div>
+
+      <div class="unified-control-container" [class.collapsed]="!isControlsExpanded">
+        <!-- Travel Mode Toggle -->
+        <div class="control-section">
+          <h3>Travel Mode</h3>
+          <div class="mode-container">
+            <div class="toggle-controls">
+              <label class="toggle-label">
+                <span class="toggle-switch">
+                  <input type="checkbox" [(ngModel)]="travelMode">
+                  <span class="toggle-slider"></span>
+                </span>
+                <span class="toggle-text">Enable Travel Mode</span>
+              </label>
+            </div>
+            <p class="mode-description">
+              Travel mode allows you to select date ranges for each city and view the average temperature during your planned stay. Perfect for trip planning!
+            </p>
+          </div>
+        </div>
+
+        <!-- View Options -->
+        <div class="control-section">
+          <h3>Card Size</h3>
+          <p class="size-description">Card size options are available when displaying 3 or more cities. With fewer cities, cards will automatically display in large size for optimal viewing.</p>
+          <div class="size-buttons">
+            <button 
+              [class.active]="effectiveCardSize === 'medium'"
+              (click)="setCardSize('medium')"
+              class="size-button"
+              [disabled]="locations.length < 3"
+            >
+              Medium
+            </button>
+            <button 
+              [class.active]="effectiveCardSize === 'large'"
+              (click)="setCardSize('large')"
+              class="size-button"
+            >
+              Large
+            </button>
+          </div>
+        </div>
+
+        <!-- Forecast Options -->
+        <div class="control-section" [class.disabled]="travelMode">
+          <h3>Forecast Options</h3>
+          <div class="forecast-controls">
+            <label for="forecastDays">Forecast Length:</label>
+            <select 
+              id="forecastDays" 
+              [(ngModel)]="forecastDays" 
+              (change)="onForecastDaysChange()"
+              class="forecast-select"
+              [disabled]="travelMode"
+            >
+              <option *ngFor="let days of availableForecastDays" [value]="days">
+                {{ days }} Days
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Display Options -->
+        <div class="control-section" [class.disabled]="travelMode">
+          <h3>Display Options</h3>
+          <div class="toggle-controls">
+            <label class="toggle-label">
+              <input type="checkbox" [(ngModel)]="showFeelsLike" class="toggle-checkbox" [disabled]="travelMode">
+              <span class="toggle-text">Show Feels Like</span>
+            </label>
+            
+            <label class="toggle-label">
+              <input type="checkbox" [(ngModel)]="showSunTimes" class="toggle-checkbox" [disabled]="travelMode">
+              <span class="toggle-text">Show Sunrise/Sunset</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      Loading weather data...
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+
+    <!-- Weather Grid -->
+    <div class="weather-grid" [ngClass]="effectiveCardSize === 'medium' ? 'medium-cards' : 'large-cards'">
+      <div *ngFor="let weather of weatherData; let i = index" class="weather-card" [class.travel-mode]="travelMode">
+        <div class="weather-header">
+          <h2>{{ weather.location.name }}</h2>
+          <button class="remove-button" (click)="removeLocation(i)">×</button>
+        </div>
+        <div class="weather-info" *ngIf="!travelMode">
+          <div class="current-weather">
+            <div class="temperature">
+              {{ weather.current.temp | number:'1.0-0' }}°F
+            </div>
+            <div class="description">
+              {{ weather.current.description }}
+            </div>
+            <div class="details">
+              <p *ngIf="showFeelsLike">Feels like: {{ weather.current.feelsLike | number:'1.0-0' }}°F</p>
+            </div>
+          </div>
+
+          <div *ngIf="showSunTimes" class="sun-times">
+            <div class="sun-time">
+              <span>🌅 {{ formatTime(weather.forecast[0].sunrise) }}</span>
+              <span>🌇 {{ formatTime(weather.forecast[0].sunset) }}</span>
+            </div>
+          </div>
+          
+          <div class="hourly-forecast">
+            <h3>Today's Trend</h3>
+            <div class="hourly-grid">
+              <div *ngFor="let hour of weather.hourly" class="hourly-item">
+                <div class="hour">{{ hour.time | date:'h a' }}</div>
+                <div class="temp">{{ hour.temp | number:'1.0-0' }}°</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="forecast">
+            <h3>{{ forecastDays }}-Day Forecast</h3>
+            <div class="forecast-grid" [style.grid-template-columns]="'repeat(' + forecastDays + ', 1fr)'">
+              <div *ngFor="let day of weather.forecast" class="forecast-day">
+                <div class="date">{{ day.date | date:'EEE' }}</div>
+                <div class="temps">
+                  <span class="high">{{ day.maxTemp | number:'1.0-0' }}°</span>
+                  <span class="low">{{ day.minTemp | number:'1.0-0' }}°</span>
+                </div>
+                <div class="precip">
+                  <span class="precip-prob">{{ day.precipProb }}%</span>
+                  <span class="precip-icon">💧</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="weather-info travel" *ngIf="travelMode">
+          <div class="travel-dates">
+            <div class="form-group mb-3">
+              <label for="startDate{{i}}">Start Date</label>
+              <div class="input-group">
+                <input
+                  id="startDate{{i}}"
+                  class="form-control"
+                  type="date"
+                  [ngModel]="getDateRange(i).startDate"
+                  (ngModelChange)="updateStartDate(i, $event)"
+                  [min]="minDate"
+                  [max]="maxDate"
+                >
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="endDate{{i}}">End Date</label>
+              <div class="input-group">
+                <input
+                  id="endDate{{i}}"
+                  class="form-control"
+                  type="date"
+                  [ngModel]="getDateRange(i).endDate"
+                  (ngModelChange)="updateEndDate(i, $event)"
+                  [min]="getDateRange(i).startDate || minDate"
+                  [max]="maxDate"
+                >
+              </div>
+            </div>
+
+            <div *ngIf="getDateRange(i).error" class="error-message">
+              {{ getDateRange(i).error }}
+            </div>
+
+            <div class="temp-range" *ngIf="getDateRange(i).startDate && getDateRange(i).endDate && !getDateRange(i).error">
+              <div class="average-temps">
+                <div class="day-temp">Average Day: {{ getDateRange(i).avgDayTemp | number:'1.0-0' }}°F</div>
+                <div class="night-temp">Average Night: {{ getDateRange(i).avgNightTemp | number:'1.0-0' }}°F</div>
+              </div>
+              <div class="temp-range-details">
+                Temperature Range: {{ getDateRange(i).minTemp | number:'1.0-0' }}°F to {{ getDateRange(i).maxTemp | number:'1.0-0' }}°F
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
