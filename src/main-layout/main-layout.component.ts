@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AppHeaderComponent } from '../app-header/app-header.component';
 import { MenuComponentComponent } from '../menu-component/menu-component.component';
-import { DetailComponentComponent } from '../detail-component/detail-component.component';
 
 @Component({
   selector: 'app-main-layout',
@@ -12,8 +11,7 @@ import { DetailComponentComponent } from '../detail-component/detail-component.c
     CommonModule,
     RouterModule,
     AppHeaderComponent,
-    MenuComponentComponent,
-    DetailComponentComponent
+    MenuComponentComponent
   ],
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.css']
