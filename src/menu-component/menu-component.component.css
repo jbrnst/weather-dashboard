@@ -23,6 +23,14 @@
   transition: background-color 0.3s ease;
 }
 
+/* Hover effect */
 .nav-link:hover {
-  background-color: #f0f0f0;
+  background-color: #f0f0f0; /* Light gray for hover */
+}
+
+/* Active (selected) tab styling */
+.nav-link.active-link {
+  background-color: #b0b0b0; /* Stronger gray for active */
+  color: white; /* White text for active link */
+  font-weight: bold; /* Bold text for active link */
 }

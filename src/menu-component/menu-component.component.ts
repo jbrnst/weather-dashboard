@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-menu-component',
@@ -11,9 +11,13 @@ import { RouterModule } from '@angular/router';
 })
 export class MenuComponentComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  // Method to check if the link is active
+  isActive(route: string): boolean {
+    return this.router.url === route; // Check if the current URL matches the route
+  }
 }
